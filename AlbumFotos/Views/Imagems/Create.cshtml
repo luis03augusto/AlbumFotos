@@ -1,0 +1,63 @@
+﻿@model AlbumFotos.Models.Imagem
+
+@{
+    ViewData["Title"] = "Nova foto para o album " + ViewBag.Destinos.Destino;
+}
+<div class="formulario">
+    <div class="container">
+        <div class="titulo">
+            <h5>@ViewData["Title"]</h5>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="AlbumId" type="hidden" value="@ViewBag.Destinos.AlbumId" />
+
+                    <img id="imagem" src="#" alt="Foto" />
+                    <div class="file-field input-field">
+                        <div class="btn-small">
+                            <span>Seleciona o arquivo</span>
+                            <input asp-for="Link" class="form-control" type="file" name="arquivo" onchange="CarregarImagem(this)" />
+                            <span asp-validation-for="Link" class="text-danger"></span>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path-wrapper validate" type="text" placeholder="Faça o upload dafoto" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn-small " />
+                        <a asp-action="Details" asp-controller="Albums" asp-route-id="@ViewBag.Destinos.AlbumId" class="btn-small grey darken-3">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#imagem").hide();
+        });
+
+        function CarregarImagem(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                $("#imagem").show();
+
+                reader.onload = function (e) {
+                    $("#imagem").attr('src', e.target.result).width(250).height(250);
+                }
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+
+}

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AlbumFotos.Models.Imagem>
+
+@{
+    ViewData["Title"] = "Default";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col s3">
+            <img src="@Url.Content(item.Link)" width="350" height="350" alt="Fotos" />
+        </div>
+    }
+</div>

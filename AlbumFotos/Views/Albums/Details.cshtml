@@ -1,0 +1,43 @@
+﻿@model AlbumFotos.Models.Album
+
+@{
+    ViewData["Title"] = "Detalhes do album" + Model.Destino;
+}
+
+<div class="album">
+    <div class="foto">
+        <div class="container">
+            <div class="texto">
+                <h2 class="white-text">@Html.DisplayFor(model => model.Destino)</h2>
+                <h5 class="white-text">@Html.DisplayFor(model => model.Inicio) a @Html.DisplayFor(model => model.Fim) </h5>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <hr />
+        <h5 class="center">Fotos de(o) @Model.Destino</h5>
+        <div class="linkImagem hide">@Model.FotoTopo</div>
+    </div>
+
+    <div class="botoes">
+        <a asp-action="Create" asp-controller="Imagems" asp-route-id="@Model.AlbumId" class="btn-small">Nova Foto</a> |
+        <a asp-action="Index" class="btn-small grey darken-3">Voltar</a>
+    </div>
+
+</div>
+
+@await Component.InvokeAsync("Imagem", new { id = Model.AlbumId})
+
+@section  Scripts{ 
+
+    <script>
+        var linkImagem = $(".linkImagem").text();
+
+        var url = "/" + linkImagem;
+
+        $(document).ready(function () {
+            $(".foto").css("background-image", "url('@Url.Content(Model.FotoTopo)')");
+        });
+    </script>
+}

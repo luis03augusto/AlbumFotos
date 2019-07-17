@@ -1,0 +1,34 @@
+{
+  "materialize-css": {
+    "dist/**/*.js": "",
+    "dist/**/*.css": ""
+  },
+  "font-awesome-5-css": {
+    "css/*.css": "css",
+    "webfonts/*": "webfonts"
+  },
+  "jquery-slimscroll": {
+    "*.js": ""
+  },
+  "jquery-validation": {
+    "dist/**/*.js": ""
+  },
+  "jquery-validation-unobtrusive": {
+    "dist/**/*.js": ""
+  },
+  "bootstrap-switch": {
+    "dist/**/*": ""
+  },
+  "jquery.autocomplete": {
+    "*js": ""
+  },
+  "jquery-mask-plugin": {
+    "dist/*.js": ""
+  },
+  "jquery-ajax-unobtrusive": {
+    "dist/*": ""
+  },
+  "jquery": {
+    "dist/*.js": ""
+  }
+}

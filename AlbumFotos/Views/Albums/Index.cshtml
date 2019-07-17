@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AlbumFotos.Models.Album>
+
+@{
+    ViewData["Title"] = "Albuns";
+}
+
+<div class="listaDestinos">
+    <div class="container">
+
+        <p>
+            <a asp-action="Create" class="waves-effect waves-light btn-small">Novo album</a>
+        </p>
+        <table class="table striped highlight hoverable responsive-table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Destino)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Inicio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fim)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Destino)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Inicio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fim)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.AlbumId" class="btn-small blue darken-2">Atualizar</a> |
+                            <a asp-action="Details"  asp-route-id="@item.AlbumId" class="btn-small orange darken-4">Fotos</a> |
+                            <a class="btn-small red darken-4 modal-trigger" data-target="modal1" onclick="Excluir(@item.AlbumId)">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Confirmar exclusão</h4>
+        <p>Deseja prosseguir com a exclusão?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="modal-close waves-effect waves-green btn-flat btnConfirmar">Sim</button>
+        <button type="button" class="modal-close waves-effect waves-green btn-flat">Não</button>
+    </div>
+</div>
+
+<script>
+
+    function Excluir(id) {
+        $(".modal").modal();
+
+        $(".btnConfirmar").on("click", function () {
+            $.ajax({
+                url: "/Albums/Delete",
+                type: "POST",
+                data: { id: id },
+                success: function () {
+                    location.reload();
+                    $(".modal").modal("close");
+                }
+            })
+        })
+
+    }
+</script>

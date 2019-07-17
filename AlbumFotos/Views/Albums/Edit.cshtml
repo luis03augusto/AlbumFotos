@@ -1,0 +1,157 @@
+﻿@model AlbumFotos.Models.Album
+
+@{
+    ViewData["Title"] = "Atualizar" + Model.Destino;
+}
+
+<div class="formulario">
+    <div class="container">
+        <div class="title">
+            <h4>@ViewData["Title"]</h4>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="AlbumId" />
+
+                    <div class="form-group">
+                        <label asp-for="Destino" class="control-label"></label>
+                        <input asp-for="Destino" class="form-control" />
+                        <span asp-validation-for="Destino" class="text-danger"></span>
+                    </div>
+
+                    @if (Model.FotoTopo != null)
+                    {
+                        <img id="imagem" src="@Url.Content(Model.FotoTopo)" width="250" height="250" alt="Foto" />
+                    }
+                    else
+                    {
+                        <img id="imagem" src="#" width="250" height="250" alt="Foto" />
+                    }
+                    <div class="file-field input-field">
+                        <div class="btn-small">
+                            <span>Seleciona o arquivo</span>
+                            <input asp-for="FotoTopo" class="form-control" type="file" name="arquivo" onchange="CarregarImagem(this)" />
+                            <span asp-validation-for="FotoTopo" class="text-danger"></span>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path-wrapper validate" type="text" placeholder="Faça o upload dafoto" />
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label asp-for="Inicio" class="control-label"></label>
+                        <input asp-for="Inicio" type="text" class="form-control datepicker" />
+                        <span asp-validation-for="Inicio" class="text-danger"></span>
+                    </div>
+
+                    <div class="input-field">
+                        <label asp-for="Fim" class="control-label"></label>
+                        <input asp-for="Fim" type="text" class="form-control datepicker" />
+                        <span asp-validation-for="Fim" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Atualizar" class="btn-small" />&nbsp;
+                        <a asp-action="Index" class="btn-small grey darken-3">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                defaultDate: new Date(),
+                setDefaultDate: true,
+                disableWeekends: false,
+                showDaysInNextAndPreviousMonths: true,
+                showMonthAfterYear: true,
+                firstDay: 0,
+                showClearBtn: true,
+                i18n: {
+                    cancel: 'Cancelar',
+                    clear: 'Limpar',
+                    done: 'Ok',
+                    previousMonth: '‹',
+                    nextMonth: '›',
+                    months: [
+                        'Janeiro',
+                        'Fevereiro',
+                        'Março',
+                        'Abril',
+                        'Maio',
+                        'Junho',
+                        'Julho',
+                        'Agosto',
+                        'Setembro',
+                        'Outubro',
+                        'Novembro',
+                        'Dezembro'
+                    ],
+
+                    monthsShort: [
+                        'Jan',
+                        'Fev',
+                        'Mar',
+                        'Abr',
+                        'Mai',
+                        'Jun',
+                        'Jul',
+                        'Ago',
+                        'Set',
+                        'Out',
+                        'Nov',
+                        'Dez'
+                    ],
+
+                    weekdays: [
+                        'Domingo',
+                        'Segunda-feira',
+                        'Terça-feira',
+                        'Quarta-feira',
+                        'Quinta-feira',
+                        'Sexta-feira',
+                        'Sábado'
+                    ],
+
+                    weekdaysShort: [
+                        'Dom',
+                        'Seg',
+                        'Ter',
+                        'Qua',
+                        'Qui',
+                        'Sex',
+                        'Sab'
+                    ],
+
+                    weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
+                }
+
+            });
+        });
+
+        function CarregarImagem(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#imagem").attr('src', e.target.result).width(250).height(250);
+                }
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+}
